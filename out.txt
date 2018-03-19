@@ -1,0 +1,417 @@
+>>  a(:,:,1)=[ 0 128 255; 0 128 255; 0 128 255 ];
+>>  a(:,:,2)=[ 0 0 0; 128 128 128; 255 255 255 ];
+>>   a(:,:,3)=zeros(3);
+>> imwrite(a,'a.png')
+>>  b=uint8(a);
+>> b(:,:,3)=[ 255 128 0; 128 0 0; 0 0 0 ];
+>>    imwrite(b,'b.png')
+>>  a2=imread('a.png');
+>>  whos
+  Name      Size             Bytes  Class     Attributes
+
+  a         3x3x3              216  double              
+  a2        3x3x3               27  uint8               
+  b         3x3x3               27  uint8               
+
+>>  c_r=b;
+>>  c_r(:,:,2)=zeros(3);
+>>    c_r(:,:,3)=zeros(3);
+>>  imwrite(c_r,'c_r.png')
+>>  c_g=b;
+>>  c_g(:,:,1)=zeros(3);
+>>  c_g(:,:,3)=zeros(3);
+>>  imwrite(c_g,'c_g.png')
+>> c_b=b;
+>>   c_b(:,:,1)=zeros(3);
+>>  c_b(:,:,2)=zeros(3);
+>>      imwrite(c_b,'c_b.png')
+>>  left_circle=zeros(500,500);
+>>  right_circle=zeros(500,500);
+>>  bottom_circle=zeros(500,500);
+>>    for k=-100:1:100
+   for l=-100:1:100
+ if sqrt(k*k+l*l)<=100
+ left_circle(200+k,200+l)=1;
+  right_circle(200+k,300+l)=1;
+   bottom_circle(300+k,250+l)=1;
+ end
+ end
+ end
+>>  image(1:500,1:500,1)=left_circle;
+>>   image(1:500,1:500,2)=zeros(500,500);
+>>  image(1:500,1:500,3)=zeros(500,500);
+>>  imwrite(image,'red_circle.png')
+>>    image(1:500,1:500,1)=zeros(500,500);
+>> image(1:500,1:500,2)=right_circle;
+>>   image(1:500,1:500,3)=zeros(500,500);
+>>   imwrite(image,'green_circle.png')
+>>  image(1:500,1:500,1)=zeros(500,500);
+>>    image(1:500,1:500,2)=zeros(500,500);
+>>     image(1:500,1:500,3)=bottom_circle;
+>>    imwrite(image,'blue_circle.png')
+>>   image(1:500,1:500,1)=left_circle;
+>>  image(1:500,1:500,2)=right_circle;
+>>   image(1:500,1:500,3)=bottom_circle;
+>>   imwrite(image,'positive_color.png')
+>>  image(1:500,1:500,1)=ones(500,500);
+>>  image(1:500,1:500,2)=1-left_circle;
+>>   image(1:500,1:500,3)=ones(500,500);
+>>   imwrite(image,'magenta_circle.png')
+>>   image(1:500,1:500,1)=1-right_circle;
+>>    image(1:500,1:500,2)=ones(500,500);
+>>   image(1:500,1:500,3)=ones(500,500);
+>>    imwrite(image,'cyan_circle.png')
+>>  image(1:500,1:500,1)=ones(500,500);
+>>   image(1:500,1:500,2)=ones(500,500);
+>>  image(1:500,1:500,3)=1-bottom_circle;
+>>    imwrite(image,'yellow_circle.png')
+>>  image=ones(500,500,3);
+>>  image(1:500,1:500,1)=double(and(1-right_circle,image(1:500,1:500,1)));
+>>  image(1:500,1:500,2)=double(and(1-left_circle,image(1:500,1:500,2)));
+>>   image(1:500,1:500,3)=double(and(1-bottom_circle,image(1:500,1:500,3)));
+>>  imwrite(image,'negative_color.png')
+>> RGB = imread('football.jpg');
+>>    whos RGB
+  Name        Size                Bytes  Class    Attributes
+
+  RGB       256x320x3            245760  uint8              
+
+>>  rgb_cycle(:,:,3)=RGB(:,:,1);
+>>      rgb_cycle(:,:,1)=RGB(:,:,2);
+>>  rgb_cycle(:,:,2)=RGB(:,:,3);
+>>    imwrite(rgb_cycle,'football_cycle.jpg')
+>> rgb_invert=255-RGB;
+>> imwrite(rgb_invert,'football_invert.jpg')
+>>  I = imread('cameraman.tif');
+>>  imwrite(I,'cameraman.png')
+>>  whos I
+  Name        Size             Bytes  Class    Attributes
+
+  I         256x256            65536  uint8              
+
+>> min(min(I))
+
+ans =
+
+    7
+
+>> max(max(I))
+
+ans =
+
+  253
+
+>>  cameraman_invert=255-I;
+>> min(min(cameraman_invert))
+
+ans =
+
+    2
+
+>>  max(max(cameraman_invert))
+
+ans =
+
+  248
+
+>>  imwrite(cameraman_invert,'cameraman_invert.png')
+>>   cameraman_low=max(I-150,0);
+>>   min(min(cameraman_low))
+
+ans =
+
+    0
+
+>> max(max(cameraman_low))
+
+ans =
+
+  103
+
+>>  imwrite(cameraman_low,'cameraman_low.png')
+>> [X,map] = imread('trees.tif');
+>>    imwrite(X,map,'trees.png')
+>>   whos X map
+  Name        Size             Bytes  Class     Attributes
+
+  X         258x350            90300  uint8               
+  map       256x3               6144  double              
+
+>> min(min(X))
+
+ans =
+
+    0
+
+>> max(max(X))
+
+ans =
+
+  127
+
+>> min(min(map(1:128,1:3)))
+
+ans =
+
+     0
+
+>> max(max(map(1:128,1:3)))
+
+ans =
+
+     1
+
+>> map_inverted(1:128,1:3)=1-map(1:128,1:3);
+>> imwrite(X,map_inverted,'trees_inverted.png')
+>> pep = imread('peppers.png','png');
+>> whos pep
+  Name        Size                Bytes  Class    Attributes
+
+  pep       384x512x3            589824  uint8              
+
+>> peppers_ycbcr=rgb2ycbcr(pep);
+>>  peppers_y=peppers_ycbcr(:,:,1);
+>> peppers_cb=peppers_ycbcr(:,:,2);
+>>  peppers_cr=peppers_ycbcr(:,:,3);
+>> imwrite(peppers_y,'peppers_y.png')
+>> imwrite(peppers_cb,'peppers_cb.png')
+>> imwrite(peppers_cr,'peppers_cr.png')
+>>   [canoe,canoe_map]=imread('canoe.tif');
+>>  imwrite(canoe,canoe_map,'canoe.png')
+>>   canoe_rgb_double=ind2rgb(canoe,canoe_map);
+>>  canoe_rgb=uint8(canoe_rgb_double*255);
+>>  whos canoe canoe_map canoe_rgb canoe_rgb_double
+  Name                    Size                 Bytes  Class     Attributes
+
+  canoe                 207x346                71622  uint8               
+  canoe_map             256x3                   6144  double              
+  canoe_rgb             207x346x3             214866  uint8               
+  canoe_rgb_double      207x346x3            1718928  double              
+
+>>  min(min(canoe))
+
+ans =
+
+    7
+
+>>  max(max(canoe))
+
+ans =
+
+  255
+
+>>   imwrite(canoe_rgb,'canoe_rgb.png')
+>>  canoe_r=canoe_rgb(:,:,1);
+>>  canoe_g=canoe_rgb(:,:,2);
+>>   canoe_b=canoe_rgb(:,:,3);
+>>   imwrite(canoe_r,'canoe_r.png')
+>>   imwrite(canoe_g,'canoe_g.png')
+>>  imwrite(canoe_b,'canoe_b.png')
+>> canoe_blue(:,:,1)=canoe_b;
+>> canoe_blue(:,:,2)=canoe_g;
+>> canoe_blue(:,:,3)=zeros(207,346);
+>> imwrite(canoe_blue,'canoe_blue.png')
+>>  canoe_ycbcr=rgb2ycbcr(canoe_rgb);
+>>  canoe_y=canoe_ycbcr(:,:,1);
+>>   canoe_cb=canoe_ycbcr(:,:,2);
+>>   canoe_cr=canoe_ycbcr(:,:,3);
+>>   imwrite(canoe_y,'canoe_y.png')
+>>   imwrite(canoe_cb,'canoe_cb.png')
+>>  imwrite(canoe_cr,'canoe_cr.png')
+>>  lenna=imread('Lenna.png');
+>> whos lenna
+  Name         Size                Bytes  Class    Attributes
+
+  lenna      512x512x3            786432  uint8              
+
+>>    lenna_r=lenna(:,:,1);
+>>  lenna_g=lenna(:,:,2);
+>>  lenna_b=lenna(:,:,3);
+>>  imwrite(lenna_r,'lenna_r.png')
+>>  imwrite(lenna_g,'lenna_g.png')
+>>   imwrite(lenna_b,'lenna_b.png')
+>> 
+>> clear all
+>>  load 'letters.mat'
+>>  who
+
+Your variables are:
+
+letter_A  letter_G  letter_M  letter_S  letter_Y  letter_e  letter_k  letter_q  letter_w  
+letter_B  letter_H  letter_N  letter_T  letter_Z  letter_f  letter_l  letter_r  letter_x  
+letter_C  letter_I  letter_O  letter_U  letter_a  letter_g  letter_m  letter_s  letter_y  
+letter_D  letter_J  letter_P  letter_V  letter_b  letter_h  letter_n  letter_t  letter_z  
+letter_E  letter_K  letter_Q  letter_W  letter_c  letter_i  letter_o  letter_u  
+letter_F  letter_L  letter_R  letter_X  letter_d  letter_j  letter_p  letter_v  
+
+>> letter_I
+
+letter_I =
+
+     0     1     1     1     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     0     1     0     0
+     0     1     1     1     0
+
+>>    indexed=ones(11,30)*3;
+>>  indexed(3:9,3:7)=letter_D;
+>> indexed(3:9,10:14)=letter_a;
+>>  indexed(3:9,17:21)=letter_v;
+>> indexed(3:9,24:28)=letter_e;
+>>  for k=1:11
+ for l=1:30
+ if indexed(k,l)==0
+indexed(k,l)=2;
+  end
+  end
+  end
+>> map=[ 1 0 1; 1 1 0; 0.5 0.5 0.5 ];
+>> imwrite(indexed,map,'name_5735512002.png')
+>> rgb2ypbpr=[ 0.299 0.587 0.114; -0.168736 -0.331264 0.5; 0.5 -0.418688 -0.081312 ]
+
+rgb2ypbpr =
+
+    0.2990    0.5870    0.1140
+   -0.1687   -0.3313    0.5000
+    0.5000   -0.4187   -0.0813
+
+>>  rgb2ypbpr*[ 0; 0; 0 ]
+
+ans =
+
+     0
+     0
+     0
+
+>> rgb2ypbpr*[ 0; 0; 1 ]
+
+ans =
+
+    0.1140
+    0.5000
+   -0.0813
+
+>>    rgb2ypbpr*[ 0; 1; 0 ]
+
+ans =
+
+    0.5870
+   -0.3313
+   -0.4187
+
+>>  rgb2ypbpr*[ 0; 1; 1 ]
+
+ans =
+
+    0.7010
+    0.1687
+   -0.5000
+
+>> rgb2ypbpr*[ 1; 0; 0 ]
+
+ans =
+
+    0.2990
+   -0.1687
+    0.5000
+
+>>   rgb2ypbpr*[ 1; 0; 1 ]
+
+ans =
+
+    0.4130
+    0.3313
+    0.4187
+
+>> rgb2ypbpr*[ 1; 1; 0 ]
+
+ans =
+
+    0.8860
+   -0.5000
+    0.0813
+
+>> rgb2ypbpr*[ 1; 1; 1 ]
+
+ans =
+
+    1.0000
+         0
+         0
+
+>>   ypbpr2rgb=inv(rgb2ypbpr)
+
+ypbpr2rgb =
+
+    1.0000   -0.0000    1.4020
+    1.0000   -0.3441   -0.7141
+    1.0000    1.7720    0.0000
+
+>>   ypbpr2rgb*[ 0; -0.5; -0.5 ]
+
+ans =
+
+   -0.7010
+    0.5291
+   -0.8860
+
+>>   ypbpr2rgb*[ 0; -0.5; 0.5 ]
+
+ans =
+
+    0.7010
+   -0.1850
+   -0.8860
+
+>>  ypbpr2rgb*[ 0; 0.5; -0.5 ]
+
+ans =
+
+   -0.7010
+    0.1850
+    0.8860
+
+>> ypbpr2rgb*[ 0; 0.5; 0.5 ]
+
+ans =
+
+    0.7010
+   -0.5291
+    0.8860
+
+>> ypbpr2rgb*[ 1; -0.5; -0.5 ]
+
+ans =
+
+    0.2990
+    1.5291
+    0.1140
+
+>> ypbpr2rgb*[ 1; -0.5; 0.5 ]
+
+ans =
+
+    1.7010
+    0.8150
+    0.1140
+
+>>  ypbpr2rgb*[ 1; 0.5; -0.5 ]
+
+ans =
+
+    0.2990
+    1.1850
+    1.8860
+
+>> ypbpr2rgb*[ 1; 0.5; 0.5 ]
+
+ans =
+
+    1.7010
+    0.4709
+    1.8860
+
+>> 
